@@ -1,0 +1,52 @@
+﻿@model List<ShopManager.Models.OrderDetails>
+@{
+    ViewData["Title"] = "Chi tiết đơn hàng #" + ViewBag.OrderInfo.OrderId;
+    var info = ViewBag.OrderInfo;
+}
+
+<h2>Chi tiết đơn hàng #@info.OrderId</h2>
+
+<div>
+    <p><strong>Khách hàng:</strong> @info.CustomerName</p>
+    <p><strong>Địa chỉ:</strong> @info.Address</p>
+    <p><strong>Điện thoại:</strong> @info.Phone</p>
+    <p><strong>Ngày đặt:</strong> @((DateTime)info.OrderDate)</p> 
+    <p><strong>Tổng tiền:</strong> @((double)info.TotalAmount) VNĐ</p>
+    <p><strong>Trạng thái:</strong> @info.Status</p>
+</div>
+
+<h4>Sản phẩm trong đơn hàng</h4>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Tên sản phẩm</th>
+            <th>Ảnh</th>
+            <th>Số lượng</th>
+            <th>Đơn giá</th>
+            <th>Thành tiền</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.ProductTitle</td>
+                <td>
+                    <img src="@Url.Content(item.ProductImage)" alt="@item.ProductTitle" style="width: 80px; height: 80px; object-fit: cover;" />
+                </td>
+                <td>@item.Quantity</td>
+                <td>@item.UnitPrice.ToString("N0") đ</td>
+                <td>@item.Total.ToString("N0") đ</td>
+            </tr>
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="3" class="text-end"><strong>Tổng cộng:</strong></td>
+            <td><strong>@((double)info.TotalAmount) VNĐ</strong></td>
+        </tr>
+    </tfoot>
+</table>
+
+<a class="btn btn-secondary" asp-area="Admin" asp-controller="OrderAdmin" asp-action="Index">← Quay lại danh sách</a>

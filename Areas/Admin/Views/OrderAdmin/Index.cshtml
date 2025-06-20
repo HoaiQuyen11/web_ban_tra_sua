@@ -1,0 +1,36 @@
+﻿@model List<ShopManager.Models.OrderDetails>
+
+<h2>Danh sách đơn hàng</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Mã đơn</th>
+            <th>Khách hàng</th>
+            <th>Ngày đặt</th>
+            <th>Địa chỉ</th>
+            <th>Điện thoại</th>
+            <th>Tổng tiền</th>
+            <th>Trạng thái</th>
+            <th>Thao tác</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var order in Model)
+        {
+            <tr>
+                <td>@order.Id</td>
+                <td>@order.FirstName @order.LastName</td>
+                <td>@order.OrderDate.ToString("dd/MM/yyyy HH:mm")</td>
+                <td>@order.Address</td>
+                <td>@order.Phone</td>
+                <td>@order.Total.ToString("N0") đ</td>
+                <td>@order.Status</td>
+                <td>
+                    <a href="@Url.Action("Details", "OrderAdmin", new { area = "Admin", id = order.Id })">Chi tiết</a> |
+                    <a href="@Url.Action("ChangeStatus", "OrderAdmin", new { area = "Admin", id = order.Id, newStatus = "Đã xử lý" })">Duyệt</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
